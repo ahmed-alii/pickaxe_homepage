@@ -1,0 +1,29 @@
+.feature-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        img {
+            max-width: 200px;
+            margin-bottom: 26px;
+        }
+        max-width: 320px;
+        p{
+            padding: 0 20px;
+        }
+    }
+}
+
+.banner{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    img.banner-img{
+        max-width: 300px;
+    }
+}
+
+footer{
+    background: rgba(155, 200, 227, 0.1);
+}

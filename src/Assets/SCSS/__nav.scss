@@ -1,0 +1,39 @@
+.user_link{
+    display: flex;
+    align-items: center;
+    img{
+        height: 18px;
+        width: 18px;
+        margin-right: 6px;
+    }
+    span{
+        font-weight: bold;
+        color: black;
+    }
+}
+
+.hamburger{
+    margin-left: 10px;
+}
+.navbar-brand{
+    svg{
+        max-height: 32px;
+    }
+}
+
+.dropdown-toggle::after{
+    content: none;
+}
+
+.navbar{
+    .dropdown-menu{
+        svg{
+            height: 17px;
+            width: 17px;
+        }
+        .dropdown-item{
+            display: flex;
+            align-items: center;
+        }
+    }
+}
