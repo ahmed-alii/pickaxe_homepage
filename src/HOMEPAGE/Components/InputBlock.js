@@ -5,27 +5,31 @@ export default function InputBlock({form, title}) {
     const [ans, setAns] = useState("")
 
     function handleSubmit(evt) {
+        evt.target.classList.toggle("submitting")
         setAns("")
         if (q) {
+
             let formdata = new FormData();
-            formdata.append("formid", form.id);
-            formdata.append("questions", q);
+            formdata.append("id", form.id);
+            formdata.append("chipquestion1", q);
+
             fetch("https://beta.pickaxeproject.com/api/formsubmission", {
                 method: 'POST',
                 body: formdata,
             })
-                .then(response => {
-                    if (response.ok) {
-                        let jsn = response.json()
-                        setAns(jsn.response)
-                    } else {
-                        console.log(response)
-                        setAns(response.statusText)
-                    }
+                .then(response => response.json())
+                .then(res => {
+                    setAns(res.response)
+                    evt.target.classList.toggle("submitting")
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    console.log('error', error)
+                    evt.target.classList.toggle("submitting")
+                });
+
         } else {
             alert("Please enter a question in the text field.")
+            evt.target.classList.remove("submitting")
         }
     }
 

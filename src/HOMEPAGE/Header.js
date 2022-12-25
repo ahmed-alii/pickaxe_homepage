@@ -8,40 +8,41 @@ export default function Header({mainForm}) {
     const [form, setForm] = useState({})
 
     function handleSubmit(evt) {
+        evt.target.classList.toggle("submitting")
         setAns("")
         if (q) {
 
             let formdata = new FormData();
-            formdata.append("formid", mainForm);
-            formdata.append("questions", q);
+            formdata.append("id", mainForm);
+            formdata.append("chipquestion1", q);
 
             fetch("https://beta.pickaxeproject.com/api/formsubmission", {
                 method: 'POST',
                 body: formdata,
             })
-                .then(response => {
-                    if (response.ok){
-                        let jsn = response.json()
-                        setAns(jsn.response)
-                    }else{
-                        console.log(response)
-                        setAns(response.statusText)
-                    }
+                .then(response => response.json())
+                .then(res => {
+                    setAns(res.response)
+                    evt.target.classList.toggle("submitting")
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    console.log('error', error)
+                    evt.target.classList.toggle("submitting")
+                });
         } else {
             alert("Please enter a question in the text field.")
+            evt.target.classList.remove("submitting")
         }
     }
 
-    useEffect(()=>{
-        if (mainForm){
+    useEffect(() => {
+        if (mainForm) {
             let requestOptions = {
                 method: 'GET',
                 redirect: 'follow'
             };
 
-            fetch("https://beta.pickaxeproject.com/api/getform?formid="+mainForm, requestOptions)
+            fetch("https://beta.pickaxeproject.com/api/getform?formid=" + mainForm, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result["form"])
@@ -49,7 +50,7 @@ export default function Header({mainForm}) {
                 })
                 .catch(error => console.log('error', error));
         }
-    },[mainForm])
+    }, [mainForm])
 
     return (
         <>
@@ -74,7 +75,8 @@ export default function Header({mainForm}) {
                         <div className={"content p-lg-5"}>
                             <p className={"fw-bold"}>FEATURED PICKAXE</p>
                             <div className={"d-flex align-items-end"}>
-                                <h1 className={"fw-bold header_text"}>{form?.title} <h6 className={"text-muted d-inline fw-light ms-3"}>by Nathanial Mahowald</h6></h1>
+                                <h1 className={"fw-bold header_text"}>{form?.title} <h6
+                                    className={"text-muted d-inline fw-light ms-3"}>by Nathanial Mahowald</h6></h1>
                             </div>
                             <p>
                                 {form?.description}

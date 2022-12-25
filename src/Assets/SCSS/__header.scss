@@ -68,6 +68,7 @@
         border-left: inherit;
         height: 100%;
         background: white;
+        position: relative;
 
         @media screen and (max-width: 900px) {
             border: 2px solid black;
@@ -76,7 +77,40 @@
             margin-top: 20px;
             height: auto;
         }
+
+        &.submitting{
+            color: white;
+            position: relative;
+        }
+        &.submitting:after {
+            content: " ";
+            display: block;
+            width: 22px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 22px;
+            margin: auto;
+            border-radius: 50%;
+            border: 6px solid #000;
+            border-color: #000 transparent #000 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
     }
+
+
+
+    @keyframes lds-dual-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
 }
 
 .ai-output {
@@ -103,10 +137,11 @@
 }
 
 
-.signedout{
-    .input-fields{
+.signedout {
+    .input-fields {
         max-width: 100% !important;
     }
+
     .ai-output {
         max-width: 100% !important;
     }
